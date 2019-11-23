@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section id="section_form">
+    <div class="box_form">
+        <img class="logo" src="static/logo.png" alt="log">
+        <h1>{{ title }}</h1>
+        <form id="form" action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.username.label }}<br>
+                {{ form.username(size=35) }}
+            </p>
+            <p>
+                {{ form.password.label }}<br>
+                {{ form.password(size=35) }}
+            </p>
+            <p>{{ form.submit() }}</p>
+        </form>
+        <a href="{{ url_for('register') }}">{{ register_message }}</a>
+    </div>
+</section>
+
+{% set  a = 0 %}
+{% for error in  form.password.errors + form.username.errors %}
+{% if error == 'Auth_error' %}
+<script>
+    window.onload = function () {
+        var form_error_message = "Usuario o contraseña incorrecta";
+        formFail(form_error_message);
+    };
+</script>
+{% endif %}
+{% if error == 'This field is required.' and a == 0%}
+<script>
+    window.onload = function () {
+        var form_error_message = "{{form_error_message}}";
+        formFail(form_error_message);
+    };
+</script>
+{% set a = 1 %}
+{% endif %}
+{% endfor %}
+{% endblock %}

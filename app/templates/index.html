@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>homepage</h1>
+<h2>Hi, {{ current_user.username }}!</h2>
+
+{% for message in  current_user.message %}
+{% if message.direction == 'bot' %}
+    <p>Bot: {{message.message}} {{message.time}}</p>
+{% endif %}
+{% if message.direction == 'user' %}
+    <p>User: {{message.message}}  {{message.time}}</p>
+{% endif %}
+{% endfor %}
+<a href="{{ url_for('logout') }}">Logout</a>
+{% endblock %}
