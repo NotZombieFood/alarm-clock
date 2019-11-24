@@ -4,3 +4,7 @@ export FLASK_APP=app.py
 
 use this too
 heroku config:add TZ="America/Mexico_City"
+
+
+## To run it locally, please run this command
+flask run --port 80 --host 0.0.0.0
