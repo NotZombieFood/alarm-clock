@@ -24,3 +24,4 @@ class Song(db.Model):
 class Alarm(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     hour = db.Column(db.Integer)
+    minutes = db.Column(db.Integer)
