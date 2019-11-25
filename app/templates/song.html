@@ -6,7 +6,7 @@
         <div class="col-md-12 center">
           <select name="song_selector" id="song_selector">
               {% for song in songs %}
-              <option value="{{song.id}}">{{song.name}}</option>
+              <option value="{{songs[song]}}">{{song}}</option>
               {% endfor %}
           </select>
           <button class="hear_song">Escuchar en mi despertín</button>

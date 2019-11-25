@@ -7,26 +7,37 @@ import datetime, os
 import threading
 import requests
 
+
+# Definitions
 MICROCONTROLLER_IP = "192.168.43.44"
+DEBUG = False
+
+# global declares
 global alarm_objects
+global songs
 
+# initing the global variables
 alarm_objects = []
-
-print(Alarm)
-
 # Dictionary with the available songs
 songs = [
-        {"name":"Thunderstruck","id":0},
-        {"name":"Zelda Woods","id":1},
-        {"name":"Ocarina","id":2},
-        {"name":"Beethoven","id":3},
-        {"name":"Simpsons","id":4},
-        {"name":"Digitallo","id":5},
-        {"name":"Zelda #2","id":6},
-        {"name":"Starwars","id":7},
-        {"name":"SMB","id":8},
-        {"name":"Xfiles","id":9}
+        {"Thunderstruck":0},
+        {"Zelda Woods":1},
+        {"Ocarina":2},
+        {"Beethoven":3},
+        {"Simpsons":4},
+        {"Digitallo":5},
+        {"Zelda #2":6},
+        {"Starwars":7},
+        {"SMB":8},
+        {"Xfiles":9}
 }]
+
+
+# in case of failure, we can set this up
+if DEBUG == True:
+    print(db.query(Alarm))
+    print(db.query(SensorData))
+
 
 """
 @app.route('/messages', methods=['GET'])
@@ -43,7 +54,7 @@ def receive_message():
     return response_message
 """
 
-
+# alarm object is the responsible of setting the request to the microcontroller to make some noise
 class AlarmObject(threading.Thread):
     def __init__(self, hours, minutes):
         self.hours = hours
@@ -80,6 +91,14 @@ def set_alarm():
     alarm_object.run()
     alarm_objects.append(alarm_object)
 
+@app.route("/set_song", methods=['GET'])
+def set_song():
+    try:
+        song_id = int(request.args.get("song"))
+        requests.get('http://%s/seleccionar_cancion:%i'%(MICROCONTROLLER_IP,song_id))
+        return "Success"
+    except:
+        return "Failure"
 
 def get_latest_alarm():
     obj = db.query(Alarm).order_by(Alarm.id.desc()).first()
@@ -91,6 +110,10 @@ def kill_alarm():
 @app.route("/")
 def index():
     return render_template('home.html')
+
+@app.route("/song")
+def song():
+    return render_template('song.html', songs = songs)
 
 @app.route('/static/<path:path>')
 def send_static_files(path):
