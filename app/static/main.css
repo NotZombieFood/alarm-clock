@@ -1,7 +1,50 @@
 body {
     margin: 0;
     font-family: 'Lato', sans-serif;
+    --main-bg-color: brown;
+    --main-letter-color: red;
+    --secondary-letter-color: blue;
 }
 .center{
   text-align: center;
+}
+
+#splash{
+  height: 100vh;
+  width: 100%;
+  background-color: var(--main-bg-color);
+  z-index: 20;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#splash img{
+  width: 40%;
+  margin: 0 auto;
+}
+
+#splash h1{
+  color: var(--main-letter-color);
+  font-size: 22px;
+}
+
+#splash h3{
+  color: var(--secondary-letter-color);
+  font-size: 14px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+#song_selector{
+
+}
+
+#song_selector option{
+
+}
+
+.set_song{
+
 }
