@@ -2,14 +2,31 @@
 
 from app import app, db
 from flask import render_template, redirect, url_for, request, send_from_directory, request
-from app.models import SensorData, Song, Alarm
+from app.models import SensorData, Alarm
 import datetime, os
 import threading
 import requests
 
 MICROCONTROLLER_IP = "192.168.43.44"
-global alarm_object
+global alarm_objects
 
+alarm_objects = []
+
+print(Alarm)
+
+# Dictionary with the available songs
+songs = [
+        {"name":"Thunderstruck","id":0},
+        {"name":"Zelda Woods","id":1},
+        {"name":"Ocarina","id":2},
+        {"name":"Beethoven","id":3},
+        {"name":"Simpsons","id":4},
+        {"name":"Digitallo","id":5},
+        {"name":"Zelda #2","id":6},
+        {"name":"Starwars","id":7},
+        {"name":"SMB","id":8},
+        {"name":"Xfiles","id":9}
+}]
 
 """
 @app.route('/messages', methods=['GET'])
@@ -41,6 +58,7 @@ class AlarmObject(threading.Thread):
                     print("ALARM NOW!")
                     # request to the microcontroller
                     requests.get('http://%s/sonar'%(MICROCONTROLLER_IP))
+                    self.just_die()
                     return
             time.sleep(60)
         except:
@@ -60,7 +78,7 @@ def set_alarm():
     db.session.commit()
     alarm_object = AlarmObject(hour, minutes)
     alarm_object.run()
-    db.session()
+    alarm_objects.append(alarm_object)
 
 
 def get_latest_alarm():
@@ -69,8 +87,6 @@ def get_latest_alarm():
 
 def kill_alarm():
     alarm_object.just_die()
-
-
 
 @app.route("/")
 def index():

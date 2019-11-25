@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 center">
+          <select name="song_selector" id="song_selector">
+              {% for song in songs %}
+              <option value="{{song.id}}">{{song.name}}</option>
+              {% endfor %}
+          </select>
+          <button class="hear_song">Escuchar en mi despertín</button>
+          <button class="set_song">Seleccionar</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(".set_song").click(function () {
+        return false;
+    });
+    $(".hear_song").click(function () {
+        return false;
+    });
+</script>
+{% endblock %}
