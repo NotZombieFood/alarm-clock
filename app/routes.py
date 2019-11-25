@@ -9,7 +9,7 @@ import requests
 
 
 # Definitions
-MICROCONTROLLER_IP = "192.168.43.44"
+MICROCONTROLLER_IP = "192.168.43.219"
 DEBUG = False
 
 # global declares
