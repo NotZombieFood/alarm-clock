@@ -1,24 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12 center">
-          <select name="song_selector" id="song_selector">
-              {% for song in songs %}
-              <option value="{{songs[song]}}">{{song}}</option>
-              {% endfor %}
-          </select>
-          <button class="hear_song">Escuchar en mi despertín</button>
-          <button class="set_song">Seleccionar</button>
-        </div>
-    </div>
+<div class="centered_father">
+    <div class="centered_box">
+      <h1>¡Escoge tu tono!</h1>
+      <h3>Personaliza tu forma de despertar.</h3>
+      <select  name="song_selector" id="song_selector">
+          {% for song in songs %}
+          {% for dictsong in song %}
+          <option value="{{song[dictsong]}}">{{dictsong}}</option>
+          {% endfor %}
+          {% endfor %}
+      </select>
+      <button class="hear_song">Escuchar en mi despertín</button>
+      <button class="set_song">Seleccionar</button>
+    </<div>
 </div>
+
 <script>
+
+function stop(){
+  $.get( "/stop", function( data ) {
+    console.log( "song is being stopped." );
+  });
+}
     $(".set_song").click(function () {
+      $.get( "/set_song?song=" + $("#song_selector").val(), function( data ) {
+        console.log( "song was set up." );
+        });
         return false;
     });
     $(".hear_song").click(function () {
+      $.get( "/set_song?song=" + $("#song_selector").val(), function( data ) {
+        console.log( "song was set up." );
+        });
+        $.get( "/play", function( data ) {
+          console.log( "song is being played." );
+        });
+        setTimeout(stop, 8000);
         return false;
     });
 </script>

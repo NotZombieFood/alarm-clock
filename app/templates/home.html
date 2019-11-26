@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
+  <div class="centered_father">
+      <div class="centered_box">
         <h1>¡Configura tu despertín!</h1>
         <h3>Selecciona la hora a la que gustas que te despertemos</h3>
         <div id="selector_tiempo">
@@ -99,9 +98,9 @@
         <button class="set_alarm">Activar alarma</button>
       </div>
     </div>
-  </div>
 <script>
   $(".set_alarm").click(function () {
+      
       return false;
   });
 </script>

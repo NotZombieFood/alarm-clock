@@ -30,7 +30,7 @@ songs = [
         {"Starwars":7},
         {"SMB":8},
         {"Xfiles":9}
-}]
+]
 
 
 # in case of failure, we can set this up
@@ -100,6 +100,22 @@ def set_song():
     except:
         return "Failure"
 
+@app.route("/play", methods = ["GET"])
+def play_song():
+    try:
+        requests.get('http://%s/tocar'%(MICROCONTROLLER_IP))
+        return "Success"
+    except:
+        return "Failure"
+
+@app.route("/stop", methods = ["GET"])
+def stop_song():
+    try:
+        requests.get('http://%s/stop'%(MICROCONTROLLER_IP))
+        return "Success"
+    except:
+        return "Failure"
+
 def get_latest_alarm():
     obj = db.query(Alarm).order_by(Alarm.id.desc()).first()
     return obj
@@ -107,11 +123,20 @@ def get_latest_alarm():
 def kill_alarm():
     alarm_object.just_die()
 
+
+@app.route("/mi_casa")
+def sensor_page():
+    return render_template("myhome.html")
+
+@app.route("/ajustar")
+def ajustar_time():
+    return render_template("ajustar.html")
+
 @app.route("/")
 def index():
     return render_template('home.html')
 
-@app.route("/song")
+@app.route("/tono")
 def song():
     return render_template('song.html', songs = songs)
 

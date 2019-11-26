@@ -12,7 +12,7 @@ function formFail(error_message) {
 
 // show a splash screen when entering first time :)
 $.sessionStorage.settings = {
-    cookiePrefix : 'html5fallback:sessionStorage:', / Prefix for the Session Storage substitution cookies
+    cookiePrefix : 'html5fallback:sessionStorage:', //Prefix for the Session Storage substitution cookies
     cookieOptions : {
         path : '/', // Path for the cookie
         domain : document.domain, // Domain for the cookie
@@ -22,8 +22,18 @@ $.sessionStorage.settings = {
 //This will be checked every session
 
 var isNew = $.sessionStorage.getItem('new');
-console.log(isNew);
+
 if (isNew != "Old session"){
+  console.log("Fading in the splash");
+  $("#splash").css("opacity","1");
   $("#splash").fadeIn();
   $.sessionStorage.setItem('new', "Old session");
+}else{
+  $("#splash").css("display","none");
+}
+
+setTimeout(removeSplash, 2000);
+
+function removeSplash() {
+   $("#splash").fadeOut();
 }
